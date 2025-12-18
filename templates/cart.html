@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart - Accessory Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <a href="/">Accessory Hub</a>
+            </div>
+            <button class="hamburger">☰</button>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/shop">Shop</a></li>
+                <li><a href="/cart">Cart</a></li>
+                {% if is_admin %}
+                <li><a href="/admin" style="color: var(--accent-color);">Admin Panel</a></li>
+                {% endif %}
+                {% if session.get('user_id') %}
+                <li><a href="/my-orders">My Orders</a></li>
+                <li><a href="/logout">Logout</a></li>
+                {% else %}
+                <li><a href="/login">Login/Register</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Cart Section -->
+    <section class="cart-section">
+        <div class="container">
+            <h1>Your Cart</h1>
+            {% if cart_items %}
+            <div class="table-responsive">
+                <table class="cart-table">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Total</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in cart_items %}
+                        <tr>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 1rem;">
+                                    <img src="{{ item.products.image_url }}" alt="{{ item.products.name }}"
+                                        style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;">
+                                    {{ item.products.name }}
+                                </div>
+                            </td>
+                            <td>R{{ item.products.price }}</td>
+                            <td>
+                                <div class="quantity-selector" style="margin-bottom: 0;">
+                                    <button
+                                        onclick="updateQuantity('{{ item.id }}', {{ item.quantity - 1 }})">-</button>
+                                    <input type="number" value="{{ item.quantity }}" readonly>
+                                    <button
+                                        onclick="updateQuantity('{{ item.id }}', {{ item.quantity + 1 }})">+</button>
+                                </div>
+                            </td>
+                            <td><span>R{{ item.products.price * item.quantity }}</span></td>
+                            <td>
+                                <button class="btn btn-secondary" onclick="removeFromCart('{{ item.id }}')"
+                                    style="padding: 0.4rem 0.8rem; font-size: 0.9rem;">Remove</button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="cart-total">
+                <h3>Total: R{{ total|default(0) }}</h3>
+            </div>
+            <div style="text-align: center; margin-top: 2rem;">
+                <a href="/shop" class="btn btn-secondary">Continue Shopping</a>
+                <a href="/checkout" class="btn btn-primary">Checkout</a>
+            </div>
+            {% else %}
+            <p>Your cart is empty. <a href="/shop">Start shopping</a></p>
+            {% endif %}
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2023 Accessory Hub. All rights reserved.</p>
+            <ul class="footer-links">
+                <li><a href="/about">About</a></li>
+                <li><a href="/contact">Contact</a></li>
+                <li><a href="#">Facebook</a></li>
+                <li><a href="#">Twitter</a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+
+</html>

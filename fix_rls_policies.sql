@@ -1,0 +1,79 @@
+-- SQL script to fix RLS policies for AccessoryHub
+-- Run this in your Supabase SQL editor
+
+-- Enable RLS on tables (if not already enabled)
+ALTER TABLE users ENABLE ROW LEVEL SECURITY;
+ALTER TABLE products ENABLE ROW LEVEL SECURITY;
+ALTER TABLE cart_items ENABLE ROW LEVEL SECURITY;
+ALTER TABLE orders ENABLE ROW LEVEL SECURITY;
+
+-- Drop existing policies if they exist (to avoid conflicts)
+DROP POLICY IF EXISTS "Users can view their own profile" ON users;
+DROP POLICY IF EXISTS "Users can insert their own profile" ON users;
+DROP POLICY IF EXISTS "Users can update their own profile" ON users;
+DROP POLICY IF EXISTS "Users can delete their own profile" ON users;
+
+-- Create users table policies that allow authenticated users to manage their own profiles
+CREATE POLICY "Users can view their own profile" ON users
+    FOR SELECT USING (auth.uid() = id);
+
+CREATE POLICY "Users can insert their own profile" ON users
+    FOR INSERT WITH CHECK (auth.uid() = id);
+
+CREATE POLICY "Users can update their own profile" ON users
+    FOR UPDATE USING (auth.uid() = id);
+
+CREATE POLICY "Users can delete their own profile" ON users
+    FOR DELETE USING (auth.uid() = id);
+
+-- Products table policies (public read access)
+DROP POLICY IF EXISTS "Anyone can view products" ON products;
+DROP POLICY IF EXISTS "Authenticated users can view products" ON products;
+
+CREATE POLICY "Anyone can view products" ON products
+    FOR SELECT USING (true);
+
+-- Cart items policies
+DROP POLICY IF EXISTS "Users can view their own cart items" ON cart_items;
+DROP POLICY IF EXISTS "Users can insert their own cart items" ON cart_items;
+DROP POLICY IF EXISTS "Users can update their own cart items" ON cart_items;
+DROP POLICY IF EXISTS "Users can delete their own cart items" ON cart_items;
+
+CREATE POLICY "Users can view their own cart items" ON cart_items
+    FOR SELECT USING (auth.uid() = user_id);
+
+CREATE POLICY "Users can insert their own cart items" ON cart_items
+    FOR INSERT WITH CHECK (auth.uid() = user_id);
+
+CREATE POLICY "Users can update their own cart items" ON cart_items
+    FOR UPDATE USING (auth.uid() = user_id);
+
+CREATE POLICY "Users can delete their own cart items" ON cart_items
+    FOR DELETE USING (auth.uid() = user_id);
+
+-- Orders policies
+DROP POLICY IF EXISTS "Users can view their own orders" ON orders;
+DROP POLICY IF EXISTS "Users can insert their own orders" ON orders;
+
+CREATE POLICY "Users can view their own orders" ON orders
+    FOR SELECT USING (auth.uid() = user_id);
+
+CREATE POLICY "Users can insert their own orders" ON orders
+    FOR INSERT WITH CHECK (auth.uid() = user_id);
+
+-- Create a trigger function to automatically create user profiles
+CREATE OR REPLACE FUNCTION public.handle_new_user()
+RETURNS TRIGGER AS $$
+BEGIN
+  INSERT INTO public.users (id, email, name)
+  VALUES (NEW.id, NEW.email, NEW.raw_user_meta_data->>'name')
+  ON CONFLICT (id) DO NOTHING;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+-- Create trigger for automatic user profile creation
+DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
+CREATE TRIGGER on_auth_user_created
+  AFTER INSERT ON auth.users
+  FOR EACH ROW EXECUTE PROCEDURE public.handle_new_user();

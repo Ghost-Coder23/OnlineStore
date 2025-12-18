@@ -1,0 +1,37 @@
+#!/usr/bin/env python3
+"""
+Complete user credentials for AccessoryHub
+"""
+
+print("=== AccessoryHub Login Credentials ===")
+print()
+print("✅ ADMIN ACCOUNT (Created Successfully):")
+print("   Email: testadmin@accesoryhub.com")
+print("   Password: admin123456")
+print("   Access: Admin dashboard at /admin")
+print()
+print("👤 REGULAR USER (Create through web interface):")
+print("   Since the registration is now working, please create a regular user:")
+print()
+print("   1. Start your app: python app.py")
+print("   2. Go to: http://localhost:5000")
+print("   3. Click 'Register'")
+print("   4. Use any valid email and password (e.g., john@example.com / password123)")
+print()
+print("🔧 NEXT STEPS:")
+print("   1. Start the application")
+print("   2. Register a new user through the web interface")
+print("   3. Test the application functionality")
+print()
+print("📝 ADMIN FEATURES:")
+print("   - Admin dashboard at /admin")
+print("   - Add/delete products")
+print("   - View and manage orders")
+print("   - Full product management")
+print()
+print("🛒 USER FEATURES:")
+print("   - Browse products")
+print("   - Add to cart")
+print("   - Place orders")
+print("   - View order history")
+

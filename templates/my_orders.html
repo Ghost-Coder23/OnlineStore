@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders - Accessory Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <a href="/">Accessory Hub</a>
+            </div>
+            <button class="hamburger">☰</button>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/shop">Shop</a></li>
+                <li><a href="/cart">Cart</a></li>
+                {% if is_admin %}
+                <li><a href="/admin" style="color: var(--accent-color);">Admin Panel</a></li>
+                {% endif %}
+                {% if session.get('user') %}
+                <li><a href="/my-orders">My Orders</a></li>
+                <li><a href="/logout">Logout</a></li>
+                {% else %}
+                <li><a href="/login">Login/Register</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <section class="section">
+        <div class="container">
+            <h1 style="margin: 2rem 0; color: var(--white);">My Orders</h1>
+            {% if orders %}
+            <div class="table-responsive">
+                <table class="cart-table">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Date</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in orders %}
+                        <tr>
+                            <td style="color: var(--text-muted);">{{ order.id }}</td>
+                            <td>{{ order.created_at[:10] }}</td>
+                            <td>R{{ order.total_amount }}</td>
+                            <td>
+                                <span class="stock-status"
+                                    style="background: rgba(249, 115, 22, 0.1); color: var(--accent-color);">{{
+                                    order.status
+                                    }}</span>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <p style="color: var(--text-muted);">You have no orders yet. <a href="/shop"
+                    style="color: var(--accent-color);">Start shopping</a></p>
+            {% endif %}
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2023 Accessory Hub. All rights reserved.</p>
+            <ul class="footer-links">
+                <li><a href="/about">About</a></li>
+                <li><a href="/contact">Contact</a></li>
+                <li><a href="#">Facebook</a></li>
+                <li><a href="#">Twitter</a></li>
+            </ul>
+        </div>
+    </footer>
+</body>
+
+</html>

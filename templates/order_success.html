@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Success - Accessory Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <a href="/">Accessory Hub</a>
+            </div>
+            <button class="hamburger">☰</button>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/shop">Shop</a></li>
+                <li><a href="/cart">Cart</a></li>
+                {% if is_admin %}
+                <li><a href="/admin" style="color: var(--accent-color);">Admin Panel</a></li>
+                {% endif %}
+                {% if session.get('user') %}
+                <li><a href="/my-orders">My Orders</a></li>
+                <li><a href="/logout">Logout</a></li>
+                {% else %}
+                <li><a href="/login">Login/Register</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <section class="section" style="text-align: center; padding: 6rem 0;">
+        <div class="container">
+            <div
+                style="background: var(--secondary-color); padding: 3rem; border-radius: var(--radius-lg); display: inline-block; box-shadow: var(--shadow-lg);">
+                <div style="font-size: 4rem; margin-bottom: 1rem;">🎉</div>
+                <h1 style="color: var(--white); margin-bottom: 1rem;">Order Placed Successfully!</h1>
+                <p style="color: var(--text-muted); margin-bottom: 2rem;">Thank you for your purchase. We will contact
+                    you shortly regarding delivery.</p>
+                <div style="display: flex; gap: 1rem; justify-content: center;">
+                    <a href="/my-orders" class="btn btn-secondary">View Orders</a>
+                    <a href="/shop" class="btn btn-primary">Continue Shopping</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2023 Accessory Hub. All rights reserved.</p>
+            <ul class="footer-links">
+                <li><a href="/about">About</a></li>
+                <li><a href="/contact">Contact</a></li>
+                <li><a href="#">Facebook</a></li>
+                <li><a href="#">Twitter</a></li>
+            </ul>
+        </div>
+    </footer>
+</body>
+
+</html>
