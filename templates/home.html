@@ -21,20 +21,20 @@
             </div>
             <button class="hamburger">☰</button>
             <ul class="nav-links">
-                <li><a href="/">Home</a></li>
-                <li><a href="/shop">Shop</a></li>
-                <li><a href="/cart">Cart</a></li>
+                <li><a href="/"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="/shop"><i class="fas fa-store"></i> Shop</a></li>
+                <li><a href="/cart"><i class="fas fa-shopping-cart"></i> Cart</a></li>
                 {% if is_admin %}
-                <li><a href="/admin" style="color: var(--accent-color);">Admin Panel</a></li>
+                <li><a href="/admin" style="color: var(--accent-color);"><i class="fas fa-cog"></i> Admin Panel</a></li>
                 {% endif %}
                 {% if session.get('user_id') %}
-                <li><a href="/admin" style="color: var(--accent-color);">Admin Panel</a></li>
+                <li><a href="/admin" style="color: var(--accent-color);"><i class="fas fa-cog"></i> Admin Panel</a></li>
                 {% endif %}
                 {% if 'user' in session %}
-                <li><a href="/my-orders">My Orders</a></li>
-                <li><a href="/logout">Logout</a></li>
+                <li><a href="/my-orders"><i class="fas fa-list"></i> My Orders</a></li>
+                <li><a href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
                 {% else %}
-                <li><a href="/login">Login/Register</a></li>
+                <li><a href="/login"><i class="fas fa-sign-in-alt"></i> Login/Register</a></li>
                 {% endif %}
             </ul>
         </div>

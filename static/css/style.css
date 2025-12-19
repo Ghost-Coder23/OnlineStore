@@ -68,6 +68,13 @@ body {
     align-items: center;
 }
 
+.logo a {
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--white);
+    text-decoration: none;
+}
+
 .hamburger {
     display: none;
     cursor: pointer;
@@ -86,9 +93,9 @@ body {
 .nav-links a {
     color: var(--text-muted);
     text-decoration: none;
-    font-weight: 500;
+    font-weight: 600;
     transition: color 0.3s;
-    font-size: 0.95rem;
+    font-size: 1rem;
 }
 
 .nav-links a:hover {
