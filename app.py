@@ -357,4 +357,4 @@ def admin_update_order():
         return jsonify({'success': False, 'message': str(e)})
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0')
+    app.run()
