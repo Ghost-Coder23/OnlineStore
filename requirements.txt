@@ -3,11 +3,8 @@ gunicorn==21.2.0
 python-dotenv==1.0.0
 Werkzeug==3.0.1
 
-# Supabase (STABLE combo)
+# Supabase (stable on Render)
 supabase==2.2.1
-gotrue==2.7.0
-postgrest==0.12.0
-storage3==0.4.0
-supafunc==0.2.1
 
-httpx==0.23.3
+# Compatible httpx (proxy still exists here)
+httpx==0.24.1
