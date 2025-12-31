@@ -1,6 +1,15 @@
 Flask==3.0.0
-supabase==2.3.4
-python-dotenv==1.0.0
-Werkzeug==3.0.1
 gunicorn==21.2.0
-httpx==0.25.2
+python-dotenv==1.0.0
+
+# Supabase + compatible deps
+supabase==2.3.4
+gotrue==2.9.1
+postgrest==0.15.1
+storage3==0.7.7
+supafunc==0.3.3
+
+# CRITICAL: compatible httpx
+httpx==0.24.1
+
+Werkzeug==3.0.1
