@@ -1,15 +1,14 @@
 Flask==3.0.0
 gunicorn==21.2.0
 python-dotenv==1.0.0
-
-# Supabase + compatible deps
-supabase==2.3.4
-gotrue==2.9.1
-postgrest==0.15.1
-storage3==0.7.7
-supafunc==0.3.3
-
-# CRITICAL: compatible httpx
-httpx==0.24.1
-
 Werkzeug==3.0.1
+
+# Supabase stack (LOCKED versions)
+supabase==2.3.4
+gotrue==2.8.1
+postgrest==0.13.2
+storage3==0.5.3
+supafunc==0.2.2
+
+# CRITICAL: last version that supports `proxy=`
+httpx==0.23.3
