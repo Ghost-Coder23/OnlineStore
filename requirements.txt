@@ -3,12 +3,11 @@ gunicorn==21.2.0
 python-dotenv==1.0.0
 Werkzeug==3.0.1
 
-# Supabase stack (LOCKED versions)
-supabase==2.3.4
-gotrue==2.8.1
-postgrest==0.13.2
-storage3==0.5.3
-supafunc==0.2.2
+# Supabase (STABLE combo)
+supabase==2.2.1
+gotrue==2.7.0
+postgrest==0.12.0
+storage3==0.4.0
+supafunc==0.2.1
 
-# CRITICAL: last version that supports `proxy=`
 httpx==0.23.3
